@@ -20,13 +20,8 @@ data Options = Options
 
 instance ParseRecord Options
 
-type MyApi = Raw
-
-app :: Proxy MyApi
-app = Proxy
-
 server :: FilePath -> Application
-server f = serve app (serveDirectory f)
+server f = serve (Proxy :: Proxy Raw) (serveDirectory f)
 
 runServer :: Options -> IO ()
 runServer o = run p s
@@ -37,6 +32,4 @@ runServer o = run p s
     | otherwise = server d
 
 main :: IO ()
-main = do
-  opts <- getRecord "srvdir - simple servant directory server!"
-  runServer opts
+main = runServer =<< getRecord "srvdir - simple servant directory server!"
