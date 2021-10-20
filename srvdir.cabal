@@ -24,4 +24,8 @@ executable srvdir
                      , wai-extra
                      , wai-app-static
                      , filepath
+                     , http-types
+                     , bytestring
+                     , data-default
   default-language:    Haskell2010
+  other-modules: ExceptionMiddleware

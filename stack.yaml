@@ -1,4 +1,14 @@
-resolver: lts-12.14
+resolver: lts-18.13
 
 packages:
 - '.'
+
+extra-deps:
+- git: https://github.com/yesodweb/wai.git
+  commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
+  subdirs:
+    - wai
+    - wai-extra
+    - wai-app-static
+    - wai-conduit
+
