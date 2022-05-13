@@ -12,7 +12,6 @@ import Network.Wai.Application.Static
 import System.FilePath
 import ExceptionMiddleware
 import Data.Default (def)
-import System.IO.Unsafe (unsafePerformIO)
 
 data Options = Options
              { port           :: Port
