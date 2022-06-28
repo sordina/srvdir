@@ -48,7 +48,7 @@ runServer o = do
     d = fromMaybe "." (directory o)
     logging = boolId (verbose    o) (logger . errorOnSomeException)
     getting = boolId (allMethods o) allGet
-  run (port o) $ (getting . logging) (serveDirectory o d)
+  run (port o) $ (logging . getting) (serveDirectory o d)
 
 main :: IO ()
 main = runServer =<< getRecord "srvdir - simple directory server!"
