@@ -28,4 +28,6 @@ executable srvdir
                      , bytestring
                      , data-default
   default-language:    Haskell2010
-  other-modules: ExceptionMiddleware
+  other-modules:
+    ExceptionMiddleware,
+    MethodTranslator
