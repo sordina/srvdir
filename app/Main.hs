@@ -1,5 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE BlockArguments #-}
 
 module Main where
 
@@ -13,6 +16,7 @@ import System.FilePath
 import ExceptionMiddleware
 import MethodTranslator (allGet)
 import Data.Default (def)
+import Control.Monad (when)
 
 data Options = Options
              { port           :: Port
@@ -28,13 +32,13 @@ mkLogger :: IO Middleware
 mkLogger = mkRequestLogger def { outputFormat = DetailedWithSettings (def { mPrelogRequests = True }) }
 
 serveDirectory :: Options -> FilePath -> Application
-serveDirectory o = staticApp . settings . addTrailingPathSeparator
+serveDirectory Options { disableListing } = staticApp . settings . addTrailingPathSeparator
   where
   settings f = setting { ssListing = listing }
     where
     setting = defaultFileServerSettings f
-    listing        | disableListing o = Nothing
-                   | otherwise        = ssListing setting
+    listing        | disableListing = Nothing
+                   | otherwise      = ssListing setting
 
 boolId :: Bool -> (a -> a) -> (a -> a)
 boolId b f
@@ -42,13 +46,16 @@ boolId b f
   | otherwise = id
 
 runServer :: Options -> IO ()
-runServer o = do
+runServer o@Options {..} = do
   logger <- mkLogger
   let
-    d = fromMaybe "." (directory o)
-    logging = boolId (verbose    o) (logger . errorOnSomeException)
-    getting = boolId (allMethods o) allGet
-  run (port o) $ (logging . getting) (serveDirectory o d)
+    d       = fromMaybe "." directory
+    logging = boolId verbose    (logger . errorOnSomeException)
+    getting = boolId allMethods allGet
+  when verbose do
+    putStrLn "Running srvdir with options:"
+    print o
+  run port $ (logging . getting) (serveDirectory o d)
 
 main :: IO ()
 main = runServer =<< getRecord "srvdir - simple directory server!"
