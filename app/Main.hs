@@ -25,6 +25,7 @@ data Options = Options
              , verbose        :: Bool
              , disableListing :: Bool
              , allMethods     :: Bool
+             , cors           :: Bool
              } deriving (Show, Generic)
 
 instance ParseRecord Options
@@ -33,8 +34,10 @@ mkLogger :: IO Middleware
 mkLogger = mkRequestLogger def { outputFormat = DetailedWithSettings (def { mPrelogRequests = True }) }
 
 serveDirectory :: Options -> FilePath -> Application
-serveDirectory Options { disableListing } = (\s -> simpleCors (staticApp s)) . settings . addTrailingPathSeparator
+serveDirectory Options { disableListing, cors } = app . settings . addTrailingPathSeparator
   where
+  app s | cors = simpleCors (staticApp s)
+        | otherwise = staticApp s
   settings f = setting { ssListing = listing }
     where
     setting = defaultFileServerSettings f
