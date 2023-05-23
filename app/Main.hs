@@ -12,6 +12,7 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.RequestLogger
 import Network.Wai.Application.Static
+import Network.Wai.Middleware.Cors
 import System.FilePath
 import ExceptionMiddleware
 import MethodTranslator (allGet)
@@ -32,7 +33,7 @@ mkLogger :: IO Middleware
 mkLogger = mkRequestLogger def { outputFormat = DetailedWithSettings (def { mPrelogRequests = True }) }
 
 serveDirectory :: Options -> FilePath -> Application
-serveDirectory Options { disableListing } = staticApp . settings . addTrailingPathSeparator
+serveDirectory Options { disableListing } = (\s -> simpleCors (staticApp s)) . settings . addTrailingPathSeparator
   where
   settings f = setting { ssListing = listing }
     where

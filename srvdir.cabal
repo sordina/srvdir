@@ -27,6 +27,7 @@ executable srvdir
                      , http-types
                      , bytestring
                      , data-default
+                     , wai-cors
   default-language:    Haskell2010
   other-modules:
     ExceptionMiddleware,

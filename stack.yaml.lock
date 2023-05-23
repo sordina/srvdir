@@ -3,62 +3,10 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
-- completed:
-    subdir: wai
-    name: wai
-    version: 3.2.3
-    git: https://github.com/yesodweb/wai.git
-    pantry-tree:
-      size: 714
-      sha256: 607b96e1ab72b2789a36fcf9bedcb079879dfb6ba342e0528e4d8d9742e3c355
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-  original:
-    subdir: wai
-    git: https://github.com/yesodweb/wai.git
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-- completed:
-    subdir: wai-extra
-    name: wai-extra
-    version: 3.1.7
-    git: https://github.com/yesodweb/wai.git
-    pantry-tree:
-      size: 4250
-      sha256: d3931c451381d6c6c30d4c35fe219e401b8a03e3d409cedffb03de0c43b9cbb8
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-  original:
-    subdir: wai-extra
-    git: https://github.com/yesodweb/wai.git
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-- completed:
-    subdir: wai-app-static
-    name: wai-app-static
-    version: 3.1.7.2
-    git: https://github.com/yesodweb/wai.git
-    pantry-tree:
-      size: 1690
-      sha256: 4593a5c289d8a5e945173474fbbd4c94500026e1c2a6be09a388dd85f434e86c
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-  original:
-    subdir: wai-app-static
-    git: https://github.com/yesodweb/wai.git
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-- completed:
-    subdir: wai-conduit
-    name: wai-conduit
-    version: 3.0.0.4
-    git: https://github.com/yesodweb/wai.git
-    pantry-tree:
-      size: 371
-      sha256: d5441b1be20d0e01731d4b6fa7cf49f67ac0723aa3c8329041c5822845662b74
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
-  original:
-    subdir: wai-conduit
-    git: https://github.com/yesodweb/wai.git
-    commit: 1ca4042fe85e8b50d25516f285d35d06fbff7005
+packages: []
 snapshots:
 - completed:
-    size: 586268
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/13.yaml
-    sha256: d9e658a22cfe8d87a64fdf219885f942fef5fe2bcb156a9800174911c5da2443
-  original: lts-18.13
+    sha256: dcf4fc28f12d805480ddbe8eb8c370e11db12f0461d0110a4240af27ac88d725
+    size: 650255
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/22.yaml
+  original: lts-20.22
