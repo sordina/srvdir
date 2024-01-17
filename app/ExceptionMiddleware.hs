@@ -19,7 +19,7 @@ import qualified Data.ByteString.Lazy.Char8 as BS
 -- Exception types are controlled by a `Proxy` argument.
 --
 handleException :: Exception e => Proxy e -> (Request -> e -> IO Response) -> Middleware
-handleException (_proxy :: Proxy e) f app req send = do
+handleException (_proxy :: Proxy e) f app req send =
   catch (app req send) $ \(e :: e) -> do
     res <- f req e
     send res

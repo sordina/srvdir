@@ -15,17 +15,19 @@ import Network.Wai.Application.Static
 import Network.Wai.Middleware.Cors
 import System.FilePath
 import ExceptionMiddleware
+import ReflectContentTypeMiddleware
 import MethodTranslator (allGet)
 import Data.Default (def)
 import Control.Monad (when)
 
 data Options = Options
-             { port           :: Port
-             , directory      :: Maybe FilePath
-             , verbose        :: Bool
-             , disableListing :: Bool
-             , allMethods     :: Bool
-             , cors           :: Bool
+             { port               :: Port
+             , directory          :: Maybe FilePath
+             , verbose            :: Bool
+             , disableListing     :: Bool
+             , allMethods         :: Bool
+             , cors               :: Bool
+             , reflectContentType :: Bool
              } deriving (Show, Generic)
 
 instance ParseRecord Options
@@ -53,13 +55,14 @@ runServer :: Options -> IO ()
 runServer o@Options {..} = do
   logger <- mkLogger
   let
-    d       = fromMaybe "." directory
-    logging = boolId verbose    (logger . errorOnSomeException)
-    getting = boolId allMethods allGet
+    d          = fromMaybe "." directory
+    logging    = boolId verbose    (logger . errorOnSomeException)
+    getting    = boolId allMethods allGet
+    reflecting = boolId reflectContentType reflectContentTypeMiddleware
   when verbose do
     putStrLn "Running srvdir with options:"
     print o
-  run port $ (logging . getting) (serveDirectory o d)
+  run port $ (logging . getting . reflecting) (serveDirectory o d)
 
 main :: IO ()
 main = runServer =<< getRecord "srvdir - simple directory server!"

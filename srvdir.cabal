@@ -31,4 +31,5 @@ executable srvdir
   default-language:    Haskell2010
   other-modules:
     ExceptionMiddleware,
+    ReflectContentTypeMiddleware,
     MethodTranslator
