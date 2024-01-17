@@ -15,7 +15,7 @@ import Data.List (find)
 import qualified Data.ByteString as BS
 
 addHeader :: HeaderName -> BS.ByteString -> Response -> Response
-addHeader n h = mapResponseHeaders ((n,h) : )
+addHeader n h = mapResponseHeaders (((n,h) : ) . filter ((/= "content-type") . fst))
 
 accept :: Request -> Maybe BS.ByteString
 accept r = snd <$> find ( (== "accept") . fst ) (requestHeaders r)
