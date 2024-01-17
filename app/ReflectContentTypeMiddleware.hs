@@ -14,8 +14,11 @@ import Data.List (find)
 
 import qualified Data.ByteString as BS
 
-addHeader :: HeaderName -> BS.ByteString -> Response -> Response
-addHeader n h = mapResponseHeaders (((n,h) : ) . filter ((/= "content-type") . fst))
+contentTypeHeaderName :: HeaderName
+contentTypeHeaderName = "content-type"
+
+setContentType :: BS.ByteString -> Response -> Response
+setContentType h = mapResponseHeaders (((contentTypeHeaderName, h) : ) . filter ((/= contentTypeHeaderName) . fst))
 
 accept :: Request -> Maybe BS.ByteString
 accept r = snd <$> find ( (== "accept") . fst ) (requestHeaders r)
@@ -26,5 +29,5 @@ reflectContentTypeMiddleware :: Middleware
 reflectContentTypeMiddleware app req send =
   case accept req of
     Nothing -> app req send
-    Just a -> modifyResponse (addHeader "content-type" a) app req send
+    Just a -> modifyResponse (setContentType a) app req send
 
